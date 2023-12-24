@@ -99,4 +99,20 @@ public class EmployeeModel {
         int i = ps.executeUpdate();
         return i> 0;
     }
+
+    public String generateNewEmpId() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT CONCAT('E', LPAD(IFNULL(MAX(SUBSTRING(emp_id, 2)), 0) + 1, 4, '0')) FROM employee";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet resultSet = ps.executeQuery()) {
+
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+
+            return null; // Return null if something goes wrong
+        }
+    }
 }
+

@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import lk.ijse.GameCafe.dto.EmployeeDto;
+import lk.ijse.GameCafe.dto.tm.CustomerTm;
 import lk.ijse.GameCafe.dto.tm.EmployeeTm;
 import lk.ijse.GameCafe.model.EmployeeModel;
 
@@ -62,8 +63,18 @@ public class EmployeeFormController {
     @FXML
     void btnClearOnAction(ActionEvent event) {
         clearFields();
+        generateEmployeeId();
     }
 
+    private void generateEmployeeId() {
+        try {
+            EmployeeModel employeeModel = new EmployeeModel();
+            String newCustomerId = employeeModel.generateNewEmpId();
+            txtEmpId.setText(newCustomerId);
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
     private void clearFields() {
 
         txtEmpId.clear();
@@ -98,6 +109,8 @@ public class EmployeeFormController {
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION, "Employee Saved Successfully");
                 loadAllEmployees();
+                clearFields();
+                generateEmployeeId();
             }
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -109,9 +122,25 @@ public class EmployeeFormController {
     public void initialize(){
         setCellValueFactory();
         loadAllEmployees();
+        generateEmployeeId();
 
+        tblEmployee.setOnMouseClicked(event -> {
+            if(event.getClickCount() == 1){
+                EmployeeTm selectedEmployee = tblEmployee.getSelectionModel().getSelectedItem();
+
+                if(selectedEmployee != null){
+                    fillFields(selectedEmployee);
+                }
+            }
+        });
     }
-
+    private void fillFields(EmployeeTm tm) {
+        txtEmpId.setText(tm.getEmpId());
+        txtEmpName.setText(tm.getEmpName());
+        txtEmpContactNum.setText(tm.getEmpContactNum());
+        txtEmpAddress.setText(tm.getEmpAddress());
+        txtEmpSalary.setText(tm.getEmpSalary());
+    }
     private void setCellValueFactory() {
         colEmpId.setCellValueFactory(new PropertyValueFactory<>("empId"));
         colEmpName.setCellValueFactory(new PropertyValueFactory<>("empName"));
@@ -147,6 +176,7 @@ public class EmployeeFormController {
     private boolean ValidateEmployee() {
         String empIdText = txtEmpId.getText();
         boolean isEmployeeIdValidated = Pattern.matches("[E][0-9]{4}", empIdText);
+
         if (!isEmployeeIdValidated) {
             new Alert(Alert.AlertType.ERROR, "invalid Employee Id!").show();
             return false;
@@ -154,6 +184,7 @@ public class EmployeeFormController {
 
         String empNameText = txtEmpName.getText();
         boolean isEmployeeNameValidated = Pattern.matches("[A-Za-z]+", empNameText);
+
         if(!isEmployeeNameValidated){
             new Alert(Alert.AlertType.ERROR, "invalid Employee Name!").show();
             return false;
@@ -161,6 +192,7 @@ public class EmployeeFormController {
 
         String empEmailText = txtEmpContactNum.getText();
         boolean isEmpEmailAddressValidated = Pattern.matches("[0-9]{10}", empEmailText  );
+
         if(!isEmpEmailAddressValidated){
             new Alert(Alert.AlertType.ERROR, "invalid Employee Contact Number!").show();
             return false;
@@ -169,6 +201,7 @@ public class EmployeeFormController {
 
         String empSalaryText = txtEmpSalary.getText();
         boolean isEmpSalaryValidated = Pattern.matches("[0-9](.*)", empSalaryText);
+
         if(!isEmpSalaryValidated){
             new Alert(Alert.AlertType.ERROR, "invalid Employee Salary!").show();
             return false;
@@ -177,6 +210,7 @@ public class EmployeeFormController {
 
         String empContactNumText = txtEmpAddress.getText();
         boolean isEmpContactNumValidated = Pattern.matches("[A-Za-z]+(.*)", empContactNumText);
+
         if(!isEmpContactNumValidated){
             new Alert(Alert.AlertType.ERROR, "invalid Employee Address!").show();
             return false;

@@ -68,20 +68,24 @@ public class CustomerFormController {
 
     @FXML
     void ButtonDeleteOnAction(ActionEvent event) {
-        String id = txtCusId.getText();
-        CustomerModel customerModel = new CustomerModel();
+        CustomerTm selectedCustomer = tblCustomer.getSelectionModel().getSelectedItem();
 
-        try {
-            boolean isDeleted = customerModel.deleteEmployee(id);
+        if (selectedCustomer != null) {
+            String id = txtCusId.getText();
+            CustomerModel customerModel = new CustomerModel();
 
-            if (isDeleted){
-                new Alert(Alert.AlertType.CONFIRMATION, "Customer Deleted Successfully").show();
+            try {
+                boolean isDeleted = customerModel.deleteEmployee(id);
 
-                loadAllCustomers();
+                if (isDeleted) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Customer Deleted Successfully").show();
+                    loadAllCustomers();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        }else{
+            new Alert(Alert.AlertType.INFORMATION, "Please select a customer to delete. ");
         }
     }
 
@@ -150,6 +154,26 @@ public class CustomerFormController {
         setCellValueFactory();
         loadAllCustomers();
         generateCustomerId();
+
+        tblCustomer.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                // Single-click detected, get the selected row
+                CustomerTm selectedCustomer = tblCustomer.getSelectionModel().getSelectedItem();
+
+                // If a row is selected, fill the fields with its data
+                if (selectedCustomer != null) {
+                    fillFields(selectedCustomer);
+                }
+            }
+        });
+    }
+
+    private void fillFields(CustomerTm tm) {
+        txtCusId.setText(tm.getCusId());
+        txtCusName.setText(tm.getCusName());
+        txtCusEmail.setText(tm.getCusEmail());
+        txtCusContactNum.setText(tm.getCusContactNum());
+        txtCusAddress.setText(tm.getCusAddress());
     }
 
     private void setCellValueFactory() {
@@ -209,23 +233,23 @@ public class CustomerFormController {
         String CusEmailText = txtCusEmail.getText();
         boolean isCustomerEmailValidated = Pattern.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}", CusEmailText);
 
-        if (isCustomerEmailValidated) {
+        if (!isCustomerEmailValidated) {
             new Alert(Alert.AlertType.ERROR, "Invalid Customer Email!!").show();
             return false;
         }
 
         String CusNameText = txtCusName.getText();
-        boolean isCustomerNameValidated = Pattern.matches("[A-Z][a-z](.*)", CusNameText);
+        boolean isCustomerNameValidated = Pattern.matches("[A-Za-z](.*)", CusNameText);
         
-        if (isCustomerNameValidated) {
+        if (!isCustomerNameValidated) {
             new Alert(Alert.AlertType.ERROR, "Invalid Customer Name!!").show();
             return false;
         }
 
         String CusAddressText = txtCusAddress.getText();
-        boolean isCustomerAddressValidated = Pattern.matches("[A-Z][a-z](.*)", CusAddressText);
+        boolean isCustomerAddressValidated = Pattern.matches("[A-Za-z](.*)", CusAddressText);
 
-        if (isCustomerAddressValidated) {
+        if (!isCustomerAddressValidated) {
             new Alert(Alert.AlertType.ERROR, "Invalid Customer Address!!").show();
             return false;
         }
