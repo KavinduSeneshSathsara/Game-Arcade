@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import lk.ijse.GameCafe.model.CustomerModel;
 
 import java.io.IOException;
 
@@ -48,6 +49,7 @@ public class MainFormController {
 
         Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/view/customer_form.fxml"));
         rootMainPane.getChildren().add(newLoadedPane);
+
     }
 
     public void SupplierOnMouseClick(MouseEvent mouseEvent) throws IOException {

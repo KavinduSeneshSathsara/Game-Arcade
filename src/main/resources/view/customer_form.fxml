@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="913.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.GameCafe.controller.CustomerFormController">
+<Pane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="913.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.GameCafe.controller.CustomerFormController">
    <children>
       <ImageView fitHeight="662.0" fitWidth="925.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -89,7 +89,7 @@
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="txtCusName" layoutX="153.0" layoutY="129.0" opacity="0.64" prefHeight="30.0" prefWidth="173.0" promptText="Id" style="-fx-background-radius: 20;">
+      <TextField fx:id="txtCusName" layoutX="153.0" layoutY="129.0" opacity="0.64" prefHeight="30.0" prefWidth="173.0" promptText="Customer Name" style="-fx-background-radius: 20;">
          <font>
             <Font size="14.0" />
          </font>

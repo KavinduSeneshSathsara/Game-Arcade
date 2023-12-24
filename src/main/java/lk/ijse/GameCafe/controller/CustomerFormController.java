@@ -88,8 +88,8 @@ public class CustomerFormController {
     @FXML
     void btnClearOnAction(ActionEvent event) {
         clearFields();
-    }
 
+    }
     private void clearFields() {
 
         txtCusId.clear();
@@ -130,15 +130,26 @@ public class CustomerFormController {
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION, "Customer Saved Successfully").show();
                 loadAllCustomers();
+                clearFields();
+                generateCustomerId();
             }
         }catch(SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
-
+    private void generateCustomerId() {
+        try {
+            CustomerModel customerModel = new CustomerModel();
+            String newCustomerId = customerModel.generateNewCustomerId();
+            txtCusId.setText(newCustomerId);
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
     public void initialize(){
         setCellValueFactory();
         loadAllCustomers();
+        generateCustomerId();
     }
 
     private void setCellValueFactory() {
@@ -191,15 +202,15 @@ public class CustomerFormController {
         boolean isCusContactNumValidated = Pattern.matches("[0-9]{10}", CusContactNumText);
         
         if (!isCusContactNumValidated){
-            new Alert(Alert.AlertType.ERROR, "Invalid Customer Contact Number!!");
+            new Alert(Alert.AlertType.ERROR, "Invalid Customer Contact Number!!").show();
             return false;
         }
 
         String CusEmailText = txtCusEmail.getText();
-        boolean isCustomerEmailValidated = Pattern.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}", CusEmailText);
+        boolean isCustomerEmailValidated = Pattern.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}", CusEmailText);
 
         if (isCustomerEmailValidated) {
-            new Alert(Alert.AlertType.ERROR, "Invalid Customer Name!!").show();
+            new Alert(Alert.AlertType.ERROR, "Invalid Customer Email!!").show();
             return false;
         }
 
@@ -215,7 +226,7 @@ public class CustomerFormController {
         boolean isCustomerAddressValidated = Pattern.matches("[A-Z][a-z](.*)", CusAddressText);
 
         if (isCustomerAddressValidated) {
-            new Alert(Alert.AlertType.ERROR, "Invalid Customer Name!!").show();
+            new Alert(Alert.AlertType.ERROR, "Invalid Customer Address!!").show();
             return false;
         }
         
