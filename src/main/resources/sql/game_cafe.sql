@@ -1,3 +1,4 @@
+
 CREATE DATABASE IF NOT EXISTS game_cafe;
 USE game_cafe;
 
@@ -8,12 +9,14 @@ CREATE TABLE IF NOT EXISTS user (
 );
 
 CREATE TABLE IF NOT EXISTS customer (
-                                        cus_id VARCHAR(15) NOT NULL PRIMARY KEY,
+                                        cus_id VARCHAR(15) NOT NULL,
                                         contact_num VARCHAR(20) NOT NULL,
                                         email VARCHAR(20) NOT NULL,
                                         cus_name VARCHAR(20) NOT NULL,
-                                        customer_address VARCHAR(30) NOT NULL
+                                        customer_address VARCHAR(30) NOT NULL,
+                                        UNIQUE (cus_id)
 );
+
 
 CREATE TABLE IF NOT EXISTS employee (
                                         emp_id VARCHAR(15) NOT NULL PRIMARY KEY,
@@ -21,14 +24,6 @@ CREATE TABLE IF NOT EXISTS employee (
                                         emp_contact_num VARCHAR(20) NOT NULL,
                                         emp_salary VARCHAR(20) NOT NULL,
                                         emp_address VARCHAR(20) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS employee_customer (
-                                                 emp_id VARCHAR(15) NOT NULL,
-                                                 cus_id VARCHAR(15) NOT NULL,
-                                                 date DATE NULL,
-                                                 FOREIGN KEY (emp_id) REFERENCES employee (emp_id) ON UPDATE CASCADE ON DELETE CASCADE,
-                                                 FOREIGN KEY (cus_id) REFERENCES customer (cus_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS play_station (
@@ -45,7 +40,15 @@ CREATE TABLE IF NOT EXISTS booking (
                                        duration_hours INT NOT NULL,
                                        booking_status VARCHAR(20) NOT NULL DEFAULT 'Pending',
                                        FOREIGN KEY (cus_id) REFERENCES customer (cus_id) ON UPDATE CASCADE ON DELETE CASCADE,
-                                       FOREIGN KEY (play_station_id) REFERENCES play_station(play_station_id) ON UPDATE CASCADE ON DELETE CASCADE
+                                       FOREIGN KEY (play_station_id) REFERENCES play_station(play_station_id) ON UPDATE CASCADE ON DELETE CASCADE,
+                                       UNIQUE (booking_id)
+);
+
+CREATE TABLE IF NOT EXISTS booking_Detals(
+                                             booking_id INT PRIMARY KEY,
+                                             total_amount DECIMAL(10, 2),
+                                             booking_status VARCHAR(20) NOT NULL DEFAULT 'Pending',
+                                             FOREIGN KEY (booking_id) REFERENCES booking(booking_id)
 );
 
 CREATE TABLE IF NOT EXISTS payment (
