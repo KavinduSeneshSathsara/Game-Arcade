@@ -1,4 +1,5 @@
 
+
 CREATE DATABASE IF NOT EXISTS game_cafe;
 USE game_cafe;
 
@@ -38,7 +39,6 @@ CREATE TABLE IF NOT EXISTS booking (
                                        booking_date DATE NOT NULL,
                                        booking_time TIME NOT NULL,
                                        duration_hours INT NOT NULL,
-                                       booking_status VARCHAR(20) NOT NULL DEFAULT 'Pending',
                                        FOREIGN KEY (cus_id) REFERENCES customer (cus_id) ON UPDATE CASCADE ON DELETE CASCADE,
                                        FOREIGN KEY (play_station_id) REFERENCES play_station(play_station_id) ON UPDATE CASCADE ON DELETE CASCADE,
                                        UNIQUE (booking_id)
