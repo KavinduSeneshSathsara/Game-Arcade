@@ -13,52 +13,12 @@ import java.util.List;
 
 public class EmployeeModel {
 
-
-    public boolean saveEmployee(EmployeeDto dto) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-        String sql = "INSERT INTO employee VALUES(?,?,?,?,?)";
-
-        PreparedStatement ps = connection.prepareStatement(sql);
-
-        ps.setString(1, dto.getEmpId());
-        ps.setString(2, dto.getEmpName());
-        ps.setString(3, dto.getEmpContactNum());
-        ps.setString(4, dto.getEmpSalary());
-        ps.setString(5, dto.getEmpAddress());
-
-        int i = ps.executeUpdate();
-        return i > 0;
-    }
-
-
-    public List<EmployeeDto> getAllEmployees() throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-        String sql = "SELECT * FROM employee";
-
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ResultSet resultSet = ps.executeQuery();
-
-        List<EmployeeDto> list = new ArrayList<>();
-
-        while (resultSet.next()) {
-            EmployeeDto dto = new EmployeeDto(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4),
-                    resultSet.getString(5));
-
-            list.add(dto);
-
-        }
-        return list;
-    }
-
     public EmployeeDto SearchModel(String id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
-        String sql = "SELECT * FROM customer WHERE cus_id = ?";
+        String sql = "SELECT * FROM employee WHERE emp_id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
+
         ps.setString(1, id);
 
         ResultSet resultSet = ps.executeQuery();
@@ -66,41 +26,77 @@ public class EmployeeModel {
         EmployeeDto dto = null;
 
         if (resultSet.next()) {
-            String empId = resultSet.getString(1);
+            String empID = resultSet.getString(1);
             String empName = resultSet.getString(2);
-            String empContactNum = resultSet.getString(3);
+            String empContactNumber = resultSet.getString(3);
             String empSalary = resultSet.getString(4);
             String empAddress = resultSet.getString(5);
 
-            dto = new EmployeeDto( empId, empName, empContactNum, empSalary, empAddress);
+            dto = new EmployeeDto(empID, empName, empContactNumber, empSalary, empAddress);
         }
         return dto;
     }
 
     public boolean updateEmployee(EmployeeDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
-        String sql = "UPDATE employee SET  emp_name=?,emp_contact_num=?,emp_salary=?, emp_address=? WHERE emp_id=?";
 
+        String sql = "UPDATE employee SET emp_name = ?, emp_contact_num = ?, emp_salary = ?, emp_address = ? WHERE emp_id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
 
-        ps.setString(1, dto.getEmpName());
-        ps.setString(2, dto.getEmpContactNum());
-        ps.setString(3, dto.getEmpSalary());
-        ps.setString(4, dto.getEmpAddress());
-        ps.setString(5, dto.getEmpId());
+        ps.setString(1,dto.getEmpName());
+        ps.setString(2,dto.getEmpContactNum());
+        ps.setString(3,dto.getEmpSalary());
+        ps.setString(4,dto.getEmpAddress());
+        ps.setString(5, dto.getEmpName());
 
-        return ps.executeUpdate()>0;
 
+        return ps.executeUpdate() > 0;
     }
 
     public boolean deleteEmployee(String id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
-        String sql = "DELETE FROM employee WHERE emp_id=?";
+
+        String sql = "DELETE FROM employee WHERE emp_id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
+
         ps.setString(1,id);
 
-        return ps.executeUpdate()>0;
+        return ps.executeUpdate() > 0;
+    }
+
+    public List<EmployeeDto> getAllEmployees() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "SELECT * FROM employee";
+        ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
+
+        List<EmployeeDto> empList = new ArrayList<>();
+
+        while (resultSet.next()) {
+            empList.add(new EmployeeDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5)
+            ));
+        }
+        return empList;
+    }
+
+    public boolean saveEmployee(EmployeeDto dto) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "INSERT INTO employee VALUES(?,?,?,?,?)";
+
+        PreparedStatement ps = connection.prepareStatement(sql);
+
+        ps.setString(1,dto.getEmpId());
+        ps.setString(2,dto.getEmpName());
+        ps.setString(3,dto.getEmpSalary());
+        ps.setString(4,dto.getEmpAddress());
+        ps.setString(5,dto.getEmpContactNum());
+
+        int i = ps.executeUpdate();
+        return i> 0;
     }
 }
-
-

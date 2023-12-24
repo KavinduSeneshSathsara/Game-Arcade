@@ -27,7 +27,6 @@ public class UserModel {
             if (resultSet.next()){
                 if (Password.equals(resultSet.getString(1))){
                     return true;
-
                 }
             }
 

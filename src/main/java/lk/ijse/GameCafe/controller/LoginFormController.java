@@ -39,12 +39,6 @@ public class LoginFormController {
                throw new RuntimeException(e);
            }
        }
-//        AnchorPane anchorPane = FXMLLoader.load(this.getClass().getResource("/view/main_form.fxml"));
-//        Scene scene = new Scene(anchorPane);
-//        Stage stage = (Stage) root.getScene().getWindow();
-//        stage.setScene(scene);
-//        stage.setTitle("Main Form");
-//        stage.centerOnScreen();
     }
 
     @FXML
@@ -55,5 +49,4 @@ public class LoginFormController {
         stage.setScene(scene);
         stage.setTitle("Signup Form");
     }
-
 }
