@@ -1,4 +1,4 @@
-
+DROP DATABASE IF EXISTS game_cafe;
 
 CREATE DATABASE IF NOT EXISTS game_cafe;
 USE game_cafe;
@@ -29,26 +29,28 @@ CREATE TABLE IF NOT EXISTS employee (
 
 CREATE TABLE IF NOT EXISTS play_station (
                                             play_station_id VARCHAR(15) PRIMARY KEY,
-                                            play_station_number VARCHAR(20) NOT NULL
+                                            play_station_number VARCHAR(20) NOT NULL,
+                                            status VARCHAR(25) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS booking (
                                        booking_id INT AUTO_INCREMENT PRIMARY KEY,
                                        cus_id VARCHAR(15) NOT NULL,
-                                       play_station_id VARCHAR(15) NOT NULL,
                                        booking_date DATE NOT NULL,
                                        booking_time TIME NOT NULL,
-                                       duration_hours INT NOT NULL,
-                                       FOREIGN KEY (cus_id) REFERENCES customer (cus_id) ON UPDATE CASCADE ON DELETE CASCADE,
-                                       FOREIGN KEY (play_station_id) REFERENCES play_station(play_station_id) ON UPDATE CASCADE ON DELETE CASCADE,
-                                       UNIQUE (booking_id)
+                                       start_time INT NOT NULL,
+                                       end_time INT NOT NULL,
+                                       booking_status VARCHAR(20) NOT NULL DEFAULT 'Pending',
+                                       FOREIGN KEY (cus_id) REFERENCES customer (cus_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS booking_Details(
                                              booking_id INT PRIMARY KEY,
+                                             play_station_id VARCHAR(15) NOT NULL,
                                              total_amount DECIMAL(10, 2),
                                              booking_status VARCHAR(20) NOT NULL DEFAULT 'Pending',
-                                             FOREIGN KEY (booking_id) REFERENCES booking(booking_id)
+                                             FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
+                                             FOREIGN KEY (play_station_id) REFERENCES play_station(play_station_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS payment (
