@@ -28,6 +28,11 @@ public class MainFormController {
         Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/view/Dashboard_form.fxml"));
         rootMainPane.getChildren().add(newLoadedPane);
     }
+    @FXML
+    void btnHomeOnAction(ActionEvent event) throws IOException {
+        Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/view/Dashboard_form.fxml"));
+        rootMainPane.getChildren().add(newLoadedPane);
+    }
 
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {

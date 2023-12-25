@@ -13,7 +13,7 @@ public class DbConnection {
         connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/game_cafe",
                 "root",
-                "Ijse1234"
+                "Kavindu44444"
         );
     }
 
