@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS booking (
                                        UNIQUE (booking_id)
 );
 
-CREATE TABLE IF NOT EXISTS booking_Detals(
+CREATE TABLE IF NOT EXISTS booking_Details(
                                              booking_id INT PRIMARY KEY,
                                              total_amount DECIMAL(10, 2),
                                              booking_status VARCHAR(20) NOT NULL DEFAULT 'Pending',

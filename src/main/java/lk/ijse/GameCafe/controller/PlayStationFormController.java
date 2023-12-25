@@ -38,25 +38,25 @@ public class PlayStationFormController {
     @FXML
     private JFXComboBox<?> txtStatus;
 
-    @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-
-
-            String id = txtPlayStationId.getText();
-            PlayStationModel playStationModel = new PlayStationModel();
-
-            try {
-                boolean isDeleted = playStationModel.delePlayStation(id);
-
-                if (isDeleted) {
-                    new Alert(Alert.AlertType.CONFIRMATION, "Play Station Deleted Successfully").show();
-                    loadAllPlayStations();
-                }
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-            }
-            new Alert(Alert.AlertType.INFORMATION, "Please select a customer to delete. ");
-    }
+//    @FXML
+//    void btnDeleteOnAction(ActionEvent event) {
+//
+//
+//            String id = txtPlayStationId.getText();
+//            PlayStationModel playStationModel = new PlayStationModel();
+//
+//            try {
+//                boolean isDeleted = playStationModel.delePlayStation(id);
+//
+//                if (isDeleted) {
+//                    new Alert(Alert.AlertType.CONFIRMATION, "Play Station Deleted Successfully").show();
+//                    loadAllPlayStations();
+//                }
+//            } catch (SQLException e) {
+//                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+//            }
+//            new Alert(Alert.AlertType.INFORMATION, "Please select a customer to delete. ");
+//    }
 
     private void loadAllPlayStations() {
 
