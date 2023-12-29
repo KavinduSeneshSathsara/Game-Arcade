@@ -18,6 +18,7 @@ import lk.ijse.GameCafe.model.PlayStationModel;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class PlayStationFormController {
 
@@ -125,8 +126,11 @@ public class PlayStationFormController {
     @FXML
     void btnSaveOnAction(ActionEvent event) {
 
+        boolean isPlaystationValidated = ValidatePlaystation();
 
-
+        if (!isPlaystationValidated){
+            return;
+        }
 
         String playStation = txtPlayStationId.getText();
         String playStationNum = txtPlayStationNumber.getText();
@@ -143,6 +147,26 @@ public class PlayStationFormController {
             e.printStackTrace();
         }
 
+    }
+
+    private boolean ValidatePlaystation() {
+        String playstationId = txtPlayStationId.getText();
+        boolean isPlayStationIdValidated = Pattern.matches("[P][0-9]{4}", playstationId);
+
+        if (!isPlayStationIdValidated) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Playstation Id!!").show();
+            return false;
+        }
+
+        String playstationNumber = txtPlayStationNumber.getText();
+        boolean isCusContactNumValidated = Pattern.matches("[1-9]", playstationNumber);
+
+        if (!isCusContactNumValidated) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Playstation Number!!").show();
+            return false;
+        }
+
+        return true;
     }
 
     @FXML
