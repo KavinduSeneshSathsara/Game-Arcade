@@ -2,18 +2,22 @@ package lk.ijse.GameCafe.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import lk.ijse.GameCafe.dto.tm.CustomerTm;
+import lk.ijse.GameCafe.dto.PlayStationDto;
 import lk.ijse.GameCafe.dto.tm.PlayStationTm;
-import lk.ijse.GameCafe.model.CustomerModel;
 import lk.ijse.GameCafe.model.PlayStationModel;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class PlayStationFormController {
 
@@ -24,7 +28,19 @@ public class PlayStationFormController {
     private Pane pane;
 
     @FXML
-    private TableView<String> tblPlayStation;
+    private TableView<PlayStationTm> tblPlayStation;
+
+    @FXML
+    private TableColumn<?, ?> colId;
+
+    @FXML
+    private TableColumn<?, ?> colNumber;
+
+    @FXML
+    private TableColumn<?, ?> colStatus;
+
+    @FXML
+    private TableColumn<?, ?> colRate;
 
     @FXML
     private TextField txtPlayStationId;
@@ -36,7 +52,21 @@ public class PlayStationFormController {
     private TextField txtSearchBar;
 
     @FXML
-    private JFXComboBox<?> txtStatus;
+    private TextField txtRate;
+
+    PlayStationModel playStationModel = new PlayStationModel();
+
+    public void initialize(){
+        setCellValueFactory();
+        loadAllPlayStations();
+    }
+
+    private void setCellValueFactory() {
+        colId.setCellValueFactory(new PropertyValueFactory<>("playStationId"));
+        colNumber.setCellValueFactory(new PropertyValueFactory<>("playStationNumber"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colRate.setCellValueFactory(new PropertyValueFactory<>("rate"));
+    }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
@@ -60,6 +90,25 @@ public class PlayStationFormController {
 
     private void loadAllPlayStations() {
 
+        ObservableList<PlayStationTm> obList = FXCollections.observableArrayList();
+
+        try {
+            List<PlayStationDto> dtoList = playStationModel.getAll();
+
+            for(PlayStationDto dto : dtoList) {
+                obList.add(
+                        new PlayStationTm(
+                                dto.getPlayStationId(),
+                                dto.getPlayStationNumber(),
+                                dto.getStatus(),
+                                dto.getRate()
+                        )
+                );
+            }
+            tblPlayStation.setItems(obList);
+        } catch (SQLException e) {
+           e.printStackTrace();
+        }
     }
 
     @FXML
@@ -70,11 +119,25 @@ public class PlayStationFormController {
     private void clearFields() {
         txtPlayStationId.clear();
         txtPlayStationNumber.clear();
-        txtStatus.setValue(null);
+        txtRate.clear();
     }
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
+        String playStation = txtPlayStationId.getText();
+        String playStationNum = txtPlayStationNumber.getText();
+        String status = "Free";
+        int rate= Integer.parseInt(txtRate.getText());
+
+        try {
+            boolean isSaved = playStationModel.savePlayStation(new PlayStationDto(playStation, playStationNum, status,rate));
+            if (isSaved){
+                new Alert(Alert.AlertType.CONFIRMATION,"Saved Successfully").show();
+                loadAllPlayStations();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

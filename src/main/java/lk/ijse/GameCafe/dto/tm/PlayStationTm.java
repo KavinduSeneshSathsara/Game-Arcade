@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class PlayStationTm {
-        private String PlayStationId;
+        private String playStationId;
         private String playStationNumber;
+        private String status;
+        private double rate;
 }

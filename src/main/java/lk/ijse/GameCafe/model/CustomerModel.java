@@ -31,6 +31,7 @@ public class CustomerModel {
         }
         return cusList;
     }
+
     public String generateNewCustomerId() throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
         String sql = "SELECT CONCAT('C', LPAD(IFNULL(MAX(SUBSTRING(cus_id, 2)), 0) + 1, 4, '0')) FROM customer";
@@ -52,14 +53,14 @@ public class CustomerModel {
 
         PreparedStatement ps = connection.prepareStatement(sql);
 
-        ps.setString(1,dto.getCusId());
-        ps.setString(2,dto.getCusContactNum());
-        ps.setString(3,dto.getCusEmail());
-        ps.setString(4,dto.getCusName());
-        ps.setString(5,dto.getCusAddress());
+        ps.setString(1, dto.getCusId());
+        ps.setString(2, dto.getCusContactNum());
+        ps.setString(3, dto.getCusEmail());
+        ps.setString(4, dto.getCusName());
+        ps.setString(5, dto.getCusAddress());
 
         int i = ps.executeUpdate();
-        return i> 0;
+        return i > 0;
     }
 
     public List<CustomerDto> getAllCustomers() throws SQLException {
@@ -71,7 +72,7 @@ public class CustomerModel {
 
         List<CustomerDto> list = new ArrayList<>();
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
             CustomerDto dto = new CustomerDto(
                     resultSet.getString(1),
                     resultSet.getString(2),
@@ -93,7 +94,7 @@ public class CustomerModel {
         String sql = "DELETE FROM customer WHERE cus_id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
 
-        ps.setString(1,id);
+        ps.setString(1, id);
 
         return ps.executeUpdate() > 0;
     }
@@ -104,12 +105,11 @@ public class CustomerModel {
         String sql = "UPDATE customer SET contact_num = ?, email = ?, cus_name = ?, customer_address = ? WHERE cus_id = ?";
         PreparedStatement ps = connection.prepareStatement(sql);
 
-        ps.setString(1,dto.getCusContactNum());
-        ps.setString(2,dto.getCusEmail());
-        ps.setString(3,dto.getCusName());
-        ps.setString(4,dto.getCusAddress());
+        ps.setString(1, dto.getCusContactNum());
+        ps.setString(2, dto.getCusEmail());
+        ps.setString(3, dto.getCusName());
+        ps.setString(4, dto.getCusAddress());
         ps.setString(5, dto.getCusId());
-
 
         return ps.executeUpdate() > 0;
     }
@@ -134,6 +134,24 @@ public class CustomerModel {
             String cusAddress = resultSet.getString(5);
 
             dto = new CustomerDto(cusId, cusContactNum, cusEmail, cusName, cusAddress);
+        }
+        return dto;
+    }
+
+    public CustomerDto getCustomer(String contact) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT * FROM customer WHERE contact_num=?");
+        pstm.setString(1,contact);
+        ResultSet resultSet = pstm.executeQuery();
+        CustomerDto dto =null;
+        if (resultSet.next()){
+            dto=new CustomerDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5)
+            );
         }
         return dto;
     }

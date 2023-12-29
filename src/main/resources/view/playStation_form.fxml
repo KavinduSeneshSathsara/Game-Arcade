@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -11,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="913.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.GameCafe.controller.PlayStationFormController">
+<Pane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="913.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.GameCafe.controller.PlayStationFormController">
     <children>
         <ImageView fitHeight="662.0" fitWidth="925.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -25,10 +24,10 @@
         </Text>
       <TableView fx:id="tblPlayStation" layoutX="31.0" layoutY="240.0" opacity="0.88" prefHeight="393.0" prefWidth="852.0">
         <columns>
-          <TableColumn prefWidth="148.7999725341797" text="Play Station Id" />
-          <TableColumn prefWidth="263.20001220703125" text="Play Station Number" />
-            <TableColumn prefWidth="212.79995727539062" text="Status" />
-            <TableColumn prefWidth="227.20001220703125" text="Booking Status" />
+          <TableColumn fx:id="colId" prefWidth="202.0" text="Play Station Id" />
+          <TableColumn fx:id="colNumber" prefWidth="236.0" text="Play Station Number" />
+            <TableColumn fx:id="colStatus" prefWidth="205.0" text="Status" />
+            <TableColumn fx:id="colRate" prefWidth="208.0" text="Hourly Rate" />
         </columns>
       </TableView>
       <TextField fx:id="txtPlayStationId" layoutX="79.0" layoutY="125.0" opacity="0.64" prefHeight="30.0" prefWidth="130.0" promptText="Id" style="-fx-background-radius: 20;">
@@ -52,7 +51,7 @@
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </Text>
-      <Text fontSmoothingType="LCD" layoutX="731.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
+      <Text fontSmoothingType="LCD" layoutX="731.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hourly Rate">
          <font>
             <Font name="Calibri Bold" size="18.0" />
          </font>
@@ -82,6 +81,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="txtStatus" layoutX="687.0" layoutY="127.0" prefHeight="25.0" prefWidth="151.0" />
+      <TextField fx:id="txtRate" layoutX="690.0" layoutY="124.0" opacity="0.64" prefHeight="30.0" prefWidth="173.0" promptText="Rate" style="-fx-background-radius: 20;" />
     </children>
 </Pane>
