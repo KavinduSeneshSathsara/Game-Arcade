@@ -48,4 +48,41 @@ public class UserModel {
         boolean isSaved = ps.executeUpdate()>0;
         return isSaved;
     }
+
+    public UserDto getEmail(String username) throws SQLException {
+        String sql = "SELECT * FROM user WHERE UserName = ?";
+        ResultSet resultSet = null;
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1,username);
+        try {
+            resultSet = pstm.executeQuery();
+            if (resultSet.next()) {
+                return new UserDto(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3)
+                );
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean updatePassword(String username, String text) throws SQLException {
+
+        String sql = "UPDATE user SET password=? WHERE UserName=?";
+        try (PreparedStatement pstm = DbConnection.getInstance().getConnection().prepareStatement(sql)) {
+            pstm.setString(1,text);
+            pstm.setString(2,username);
+            int rows = pstm.executeUpdate();
+            if (rows > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
