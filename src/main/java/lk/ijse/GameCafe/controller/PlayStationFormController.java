@@ -126,11 +126,11 @@ public class PlayStationFormController {
     @FXML
     void btnSaveOnAction(ActionEvent event) {
 
-        boolean isPlaystationValidated = ValidatePlaystation();
-
-        if (!isPlaystationValidated){
-            return;
-        }
+//        boolean isPlaystationValidated = ValidatePlaystation();
+//
+//        if (!isPlaystationValidated){
+//            return;
+//        }
 
         String playStation = txtPlayStationId.getText();
         String playStationNum = txtPlayStationNumber.getText();
