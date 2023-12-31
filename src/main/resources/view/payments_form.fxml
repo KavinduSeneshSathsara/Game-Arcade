@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="913.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.GameCafe.controller.PaymentsFormController">
+<Pane fx:id="pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="913.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.GameCafe.controller.PaymentsFormController">
    <children>
       <ImageView fitHeight="662.0" fitWidth="925.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -23,7 +24,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </TextField>
-      <Text fontSmoothingType="LCD" layoutX="306.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Name">
+      <Text fontSmoothingType="LCD" layoutX="345.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Name">
          <font>
             <Font name="Calibri Bold" size="18.0" />
          </font>
@@ -43,7 +44,7 @@
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </Text>
-      <TableView fx:id="tblPayment" layoutX="25.0" layoutY="288.0" opacity="0.85" prefHeight="347.0" prefWidth="881.0">
+      <TableView fx:id="tblPayment" layoutX="14.0" layoutY="290.0" opacity="0.85" prefHeight="347.0" prefWidth="881.0">
          <columns>
             <TableColumn fx:id="colPaymentId" prefWidth="112.80002135038376" text="Payment Id" />
             <TableColumn fx:id="colBookingId" prefWidth="173.5999298095703" text="Booking Id" />
@@ -62,8 +63,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </JFXButton>
-      <TextField fx:id="txtAmount" editable="false" layoutX="621.0" layoutY="148.0" opacity="0.64" prefHeight="30.0" prefWidth="225.0" promptText="Amount" style="-fx-background-radius: 20;" />
-      <TextField fx:id="txtCustomer" editable="false" layoutX="306.0" layoutY="150.0" opacity="0.64" prefHeight="30.0" prefWidth="225.0" promptText="Customer Name" style="-fx-background-radius: 20;" />
       <JFXButton fx:id="btnPay" buttonType="RAISED" layoutX="231.0" layoutY="209.0" onAction="#btnPayOnAction" prefHeight="40.0" prefWidth="151.0" style="-fx-background-color: #30336b; -fx-background-radius: 50;" text="Pay" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -79,5 +78,15 @@
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </Text>
+      <Label fx:id="lblCustomerName" layoutX="345.0" layoutY="151.0" prefHeight="30.0" prefWidth="173.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblAmount" layoutX="624.0" layoutY="151.0" prefHeight="30.0" prefWidth="173.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

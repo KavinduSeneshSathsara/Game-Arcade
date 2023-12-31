@@ -1,12 +1,16 @@
 package lk.ijse.GameCafe.model;
 
 import lk.ijse.GameCafe.db.DbConnection;
+import lk.ijse.GameCafe.dto.CustomerDto;
 import lk.ijse.GameCafe.dto.PaymentDto;
+import lk.ijse.GameCafe.dto.PlayStationDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PaymentModel {
     public boolean savePayment(PaymentDto dto) throws SQLException {
@@ -64,5 +68,27 @@ public class PaymentModel {
             else if (id > 99) return String.valueOf(id);
         }
         return "P001";
+    }
+
+    public List<PaymentDto> getAllPayments() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM payment";
+
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        ResultSet resultSet = pstm.executeQuery();
+
+        List<PaymentDto> list = new ArrayList<>();
+
+        while (resultSet.next()){
+            PaymentDto dto = new PaymentDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getDate(3),
+                    resultSet.getTime(4),
+                    resultSet.getDouble(5));
+
+            list.add(dto);
+        }
+        return list;
     }
 }

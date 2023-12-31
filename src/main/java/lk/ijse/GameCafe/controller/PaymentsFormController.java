@@ -4,13 +4,13 @@ import com.jfoenix.controls.JFXButton;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -18,6 +18,7 @@ import lk.ijse.GameCafe.db.DbConnection;
 import lk.ijse.GameCafe.dto.BookingDto;
 import lk.ijse.GameCafe.dto.CustomerDto;
 import lk.ijse.GameCafe.dto.PaymentDto;
+import lk.ijse.GameCafe.dto.tm.PaymentTm;
 import lk.ijse.GameCafe.model.BookingModel;
 import lk.ijse.GameCafe.model.CustomerModel;
 import lk.ijse.GameCafe.model.PaymentModel;
@@ -30,7 +31,14 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import static lk.ijse.GameCafe.controller.ForgotPasswordFormController.otp;
 
 public class PaymentsFormController implements Initializable {
 
@@ -50,7 +58,7 @@ public class PaymentsFormController implements Initializable {
     private Text lblTime;
 
     @FXML
-    private TableView<?> tblPayment;
+    private TableView<PaymentTm> tblPayment;
 
     @FXML
     private TableColumn<?, ?> colPaymentId;
@@ -74,6 +82,12 @@ public class PaymentsFormController implements Initializable {
     private TextField txtCustomer;
 
     @FXML
+    private Label lblAmount;
+
+    @FXML
+    private Label lblCustomerName;
+
+    @FXML
     private Text lblPaymentID;
 
     @FXML
@@ -90,6 +104,28 @@ public class PaymentsFormController implements Initializable {
         txtAmount.clear();
     }
 
+    public void initialize(){
+        setCellValueFactory();
+        loadAllPayments();
+        setPaymentId();
+    }
+
+//    @Override
+//    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        setPaymentId();
+//        time();
+//        setCellValueFactory();  // Call the method to set cell value factories
+//        loadAllPayments();      // Call the method to load initial data
+//    }
+
+    private void setCellValueFactory() {
+        colPaymentId.setCellValueFactory(new PropertyValueFactory<>("paymentId"));
+        colBookingId.setCellValueFactory(new PropertyValueFactory<>("bookingId"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
+        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+    }
+
     @FXML
     void btnPayOnAction(ActionEvent event) throws SQLException {
         Connection connection = null;
@@ -102,16 +138,19 @@ public class PaymentsFormController implements Initializable {
                     txtBookingId.getText( ),
                     Date.valueOf( LocalDate.now( ) ),
                     Time.valueOf( LocalTime.now( ) ),
-                    Double.parseDouble( txtAmount.getText( ) )
+                    Double.parseDouble( lblAmount.getText( ) )
             ) );
 
             if ( savePayment ) {
                 boolean isUpdated = bookingModel.updateStatus( txtBookingId.getText( ) );
+//                loadAllPayments();
 
                 if ( isUpdated ) {
                     connection.commit();
                     new Alert( Alert.AlertType.CONFIRMATION, "Payment Saved" ).show();
                     setPaymentId();
+                    loadAllPayments();
+//                    EmailController.sendEmail();
                 } else {
                     new Alert( Alert.AlertType.ERROR , "Something Went Wrong" ).show();
                 }
@@ -126,6 +165,33 @@ public class PaymentsFormController implements Initializable {
         }
     }
 
+    private void loadAllPayments() {
+
+        PaymentModel paymentModel = new PaymentModel();
+
+        ObservableList<PaymentTm> obList = FXCollections.observableArrayList();
+
+        try{
+            List<PaymentDto> list = paymentModel.getAllPayments();
+
+            for (PaymentDto dto: list){
+                PaymentTm paymentTm = new PaymentTm(
+                        dto.getPaymentId(),
+                        dto.getBookingId(),
+                        dto.getDate(),
+                        dto.getTime(),
+                        dto.getAmount()
+                );
+
+                obList.add(paymentTm);
+            }
+            tblPayment.setItems(obList);
+        }catch (SQLException e){
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        }
+        System.out.println("loading");
+    }
+
     @FXML
     void txtBookingIdOnAction(ActionEvent event) {
         try {
@@ -134,8 +200,8 @@ public class PaymentsFormController implements Initializable {
             if ( bookingData != null && bookingData.getStatus().equals( "Not Paid" ) ) {
 
                 CustomerDto dto = customerModel.SearchModel( bookingData.getCus_id() );
-                txtCustomer.setText( dto.getCusName() );
-                txtAmount.setText( String.valueOf( bookingData.getTotal() ) );
+                lblCustomerName.setText( dto.getCusName() );
+                lblAmount.setText( String.valueOf( bookingData.getTotal() ) );
                 btnPay.setDisable( false );
             } else {
                 new Alert( Alert.AlertType.ERROR, "Already Paid !" ).show();

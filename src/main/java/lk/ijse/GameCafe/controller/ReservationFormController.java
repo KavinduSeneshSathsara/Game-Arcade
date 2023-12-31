@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -72,6 +73,12 @@ public class ReservationFormController {
 
     @FXML
     private Text lblDate;
+
+    @FXML
+    private Label lblCustomerEmail;
+
+    @FXML
+    private Label lblCustomerName;
 
     @FXML
     private DatePicker datePicker;
@@ -329,18 +336,40 @@ public class ReservationFormController {
         cmbStartTime.setDisable(false);
     }
 
+//    @FXML
+//    void txtContactOnAction(ActionEvent event) {
+//        try {
+//            CustomerDto customerDto = customerModel.getCustomer(txtContact.getText());
+//            txtCustName.setText(customerDto.getCusName());
+//            txtCustMail.setText(customerDto.getCusEmail());
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
     @FXML
-    void txtContactOnAction(ActionEvent event) {
+    void txtContactOnFocusLost(Event event) {
         try {
             CustomerDto customerDto = customerModel.getCustomer(txtContact.getText());
-            txtCustName.setText(customerDto.getCusName());
-            txtCustMail.setText(customerDto.getCusEmail());
+            lblCustomerName.setText(customerDto.getCusName());
+            lblCustomerEmail.setText(customerDto.getCusEmail());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
+//    @FXML
+//    void cmbStationOnAction(Event event) {
+//        try {
+//            PlayStationDto playStationDto;
+//            playStationDto = stationModel.getRate(cmbStation.getId());
+//            lblRate.setText(String.valueOf(playStationDto.getRate()));
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
     @FXML
     void cmbStationOnAction(ActionEvent event) {
         try {
