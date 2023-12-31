@@ -5,10 +5,7 @@ import lk.ijse.GameCafe.dto.CustomerDto;
 import lk.ijse.GameCafe.dto.PaymentDto;
 import lk.ijse.GameCafe.dto.PlayStationDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,5 +87,29 @@ public class PaymentModel {
             list.add(dto);
         }
         return list;
+    }
+
+    public PaymentDto SearchModel(String id) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "SELECT * FROM payment WHERE payment_id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+
+        ps.setString(1, id);
+
+        ResultSet resultSet = ps.executeQuery();
+
+        PaymentDto dto = null;
+
+        if (resultSet.next()) {
+            String paymentId = resultSet.getString(1);
+            String bookingId = resultSet.getString(2);
+            Date paymentDate = Date.valueOf(String.valueOf(resultSet.getDate(3)));
+            Time paymentTime = Time.valueOf(String.valueOf(resultSet.getTime(4)));
+            double amount = Double.parseDouble(resultSet.getString(5));
+
+            dto = new PaymentDto(paymentId, bookingId, paymentDate, paymentTime, amount);
+        }
+        return dto;
     }
 }

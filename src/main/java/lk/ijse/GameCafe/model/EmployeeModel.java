@@ -47,7 +47,7 @@ public class EmployeeModel {
         ps.setString(2,dto.getEmpContactNum());
         ps.setString(3,dto.getEmpSalary());
         ps.setString(4,dto.getEmpAddress());
-        ps.setString(5, dto.getEmpName());
+        ps.setString(5, dto.getEmpId());
 
 
         return ps.executeUpdate() > 0;
@@ -92,9 +92,9 @@ public class EmployeeModel {
 
         ps.setString(1,dto.getEmpId());
         ps.setString(2,dto.getEmpName());
-        ps.setString(3,dto.getEmpSalary());
-        ps.setString(4,dto.getEmpAddress());
-        ps.setString(5,dto.getEmpContactNum());
+        ps.setString(3,dto.getEmpContactNum());
+        ps.setString(4,dto.getEmpSalary());
+        ps.setString(5,dto.getEmpAddress());
 
         int i = ps.executeUpdate();
         return i> 0;

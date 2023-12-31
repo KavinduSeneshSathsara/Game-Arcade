@@ -105,8 +105,8 @@ public class PaymentsFormController implements Initializable {
     @FXML
     void btnClearOnAction(ActionEvent event) {
         txtBookingId.clear();
-        txtCustomer.clear();
-        txtAmount.clear();
+        lblCustomerName.setText("");
+        lblAmount.setText("");
     }
 
     public void initialize(){
@@ -217,10 +217,29 @@ public class PaymentsFormController implements Initializable {
         }
     }
 
-    @FXML
-    void btnSearchOnAction(ActionEvent event) {
+//    @FXML
+//    void btnSearchOnAction(ActionEvent event) {
+//        String id = txtSearchBar.getText();
+//        var model = new PaymentModel();
+//        try {
+//
+//            var dto = model.SearchModel(id);
+//            if (dto != null){
+//                fillField(dto);
+//            }else {
+//                new Alert(Alert.AlertType.INFORMATION,"Customer not found").show();
+//            }
+//        } catch (SQLException e) {
+//            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+//        }
+//    }
 
-    }
+//    private void fillField(PaymentDto dto) {
+//
+//        txtBookingId.setText(dto.getBookingId());
+//        txtCustomer.setText(dto1.getCusName());
+//        txtAmount.setText(String.valueOf(dto.getAmount()));
+//    }
 
     @FXML
     void btnReportOnAction(ActionEvent event) throws JRException, SQLException {
@@ -256,5 +275,8 @@ public class PaymentsFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
        setPaymentId();
        time();
+    }
+
+    public void btnSearchOnAction(ActionEvent actionEvent) {
     }
 }
