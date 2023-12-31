@@ -112,16 +112,9 @@ public class PaymentsFormController implements Initializable {
     public void initialize(){
         setCellValueFactory();
         loadAllPayments();
+        time();
         setPaymentId();
     }
-
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        setPaymentId();
-//        time();
-//        setCellValueFactory();  // Call the method to set cell value factories
-//        loadAllPayments();      // Call the method to load initial data
-//    }
 
     private void setCellValueFactory() {
         colPaymentId.setCellValueFactory(new PropertyValueFactory<>("paymentId"));

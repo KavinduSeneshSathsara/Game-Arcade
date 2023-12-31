@@ -15,5 +15,5 @@ public class PaymentTm {
     private String bookingId;
     private Date date;
     private Time time;
-    private double amount;
+    private Double amount;
 }
