@@ -114,5 +114,17 @@ public class EmployeeModel {
             return null; // Return null if something goes wrong
         }
     }
+    public String totalEmployeeCount() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "SELECT COUNT(*) AS EmployeeCount FROM Employee";
+        ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
+
+
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        return null;
+    }
 }
 

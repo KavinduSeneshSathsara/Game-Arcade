@@ -115,4 +115,16 @@ public class BookingModel {
 
         return list;
     }
+    public String totalBookingCount() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "SELECT COUNT(*) AS BookingCount FROM booking";
+        ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
+
+
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        return null;
+    }
 }
