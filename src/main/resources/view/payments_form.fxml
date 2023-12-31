@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -44,13 +45,13 @@
             <Font name="Calibri Bold" size="18.0" />
          </font>
       </Text>
-      <TableView fx:id="tblPayment" layoutX="14.0" layoutY="290.0" opacity="0.85" prefHeight="347.0" prefWidth="881.0">
+      <TableView fx:id="tblPayment" layoutX="37.0" layoutY="290.0" opacity="0.85" prefHeight="317.0" prefWidth="831.0">
          <columns>
             <TableColumn fx:id="colPaymentId" prefWidth="112.80002135038376" text="Payment Id" />
             <TableColumn fx:id="colBookingId" prefWidth="173.5999298095703" text="Booking Id" />
             <TableColumn fx:id="colDate" prefWidth="191.2000732421875" text="Date" />
             <TableColumn fx:id="colTime" prefWidth="202.4000244140625" text="time" />
-            <TableColumn fx:id="colAmount" prefWidth="228.800048828125" text="Amount" />
+            <TableColumn fx:id="colAmount" prefWidth="170.79998779296875" text="Amount" />
          </columns>
       </TableView>
       <Text fontSmoothingType="LCD" layoutX="624.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount">
@@ -88,5 +89,10 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
+      <JFXButton buttonType="RAISED" layoutX="38.0" layoutY="614.0" onAction="#btnReportOnAction" prefHeight="34.0" prefWidth="70.0" style="-fx-background-color: black;" text="Report" textFill="#efeaea">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
    </children>
 </Pane>

@@ -22,7 +22,12 @@ import lk.ijse.GameCafe.dto.tm.PaymentTm;
 import lk.ijse.GameCafe.model.BookingModel;
 import lk.ijse.GameCafe.model.CustomerModel;
 import lk.ijse.GameCafe.model.PaymentModel;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
@@ -215,6 +220,15 @@ public class PaymentsFormController implements Initializable {
     @FXML
     void btnSearchOnAction(ActionEvent event) {
 
+    }
+
+    @FXML
+    void btnReportOnAction(ActionEvent event) throws JRException, SQLException {
+            InputStream resourceAsStream = getClass().getResourceAsStream("/reports/paymentReport.jrxml");
+            JasperDesign jasperDesign = JRXmlLoader.load(resourceAsStream);
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DbConnection.getInstance().getConnection());
+            JasperViewer.viewReport(jasperPrint,false);
     }
 
     private void time() {
