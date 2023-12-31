@@ -15,5 +15,5 @@ public class PaymentDto {
     private String bookingId;
     private Date date;
     private Time time;
-    private Double amount;
+    private double amount;
 }

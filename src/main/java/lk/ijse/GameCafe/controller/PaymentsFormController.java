@@ -101,6 +101,7 @@ public class PaymentsFormController implements Initializable {
     PaymentModel paymentModel = new PaymentModel();
     BookingModel bookingModel = new BookingModel();
     CustomerModel customerModel = new CustomerModel();
+    CustomerDto customerDto = new CustomerDto();
 
     @FXML
     void btnClearOnAction(ActionEvent event) {
@@ -125,7 +126,7 @@ public class PaymentsFormController implements Initializable {
     }
 
     @FXML
-    void btnPayOnAction(ActionEvent event) throws SQLException {
+    void btnPayOnAction(ActionEvent event) throws SQLException, MessagingException {
         Connection connection = null;
         try {
             connection = DbConnection.getInstance( ).getConnection( );
@@ -141,14 +142,14 @@ public class PaymentsFormController implements Initializable {
 
             if ( savePayment ) {
                 boolean isUpdated = bookingModel.updateStatus( txtBookingId.getText( ) );
-//                loadAllPayments();
+                loadAllPayments();
 
                 if ( isUpdated ) {
                     connection.commit();
                     new Alert( Alert.AlertType.CONFIRMATION, "Payment Saved" ).show();
                     setPaymentId();
                     loadAllPayments();
-//                    EmailController.sendEmail();
+//                    EmailController.sendEmail(customerDto.getCusEmail(), "Payment Confirmation", "Thank you for your payment!");
                 } else {
                     new Alert( Alert.AlertType.ERROR , "Something Went Wrong" ).show();
                 }

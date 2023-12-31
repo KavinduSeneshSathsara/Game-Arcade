@@ -58,12 +58,12 @@
       <ComboBox fx:id="cmbStation" layoutX="69.0" layoutY="260.0" onAction="#cmbStationOnAction" opacity="0.9" prefHeight="31.0" prefWidth="173.0" promptText="Station" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="54.0" layoutX="363.0" layoutY="258.0" stroke="BLACK" strokeType="INSIDE" width="141.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="54.0" layoutX="562.0" layoutY="258.0" stroke="BLACK" strokeType="INSIDE" width="173.0" />
-      <Text fx:id="lblRate" fill="#000000dd" fontSmoothingType="LCD" layoutX="361.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="140.99999438016675">
+      <Text fx:id="lblRate" fill="#000000dd" fontSmoothingType="LCD" layoutX="361.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100" textAlignment="CENTER" wrappingWidth="140.99999438016675">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </Text>
-      <Text fontSmoothingType="LCD" layoutX="777.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Id">
+      <Text fontSmoothingType="LCD" layoutX="764.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Booking Id" wrappingWidth="122.8515625">
          <font>
             <Font name="Calibri Bold" size="24.0" />
          </font>

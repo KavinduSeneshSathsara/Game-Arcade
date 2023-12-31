@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class BookingModel {
+
     public boolean saveBooking(BookingDto bookingDto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
         String sql = "INSERT INTO booking VALUES (?,?,?,?,?,?,?,?)";
@@ -23,6 +24,7 @@ public class BookingModel {
         pstm.setDouble(8,bookingDto.getTotal());
         return pstm.executeUpdate()>0;
     }
+
     public String generateNextId() throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
         String sql = "SELECT * FROM booking ORDER BY booking_id DESC LIMIT 1";
