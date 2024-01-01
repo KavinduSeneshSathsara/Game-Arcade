@@ -5,4 +5,3 @@ public class AppInitializerWrapper {
         lk.ijse.GameCafe.AppInitializer.main(args);
     }
 }
-

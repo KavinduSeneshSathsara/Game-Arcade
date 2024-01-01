@@ -41,6 +41,7 @@ public class LoginFormController {
            }
        }
     }
+
 //    @FXML
 //    void btnContinueOnAction(ActionEvent event) throws IOException {
 //        AnchorPane anchorPane = FXMLLoader.load(this.getClass().getResource("/view/main_form.fxml"));

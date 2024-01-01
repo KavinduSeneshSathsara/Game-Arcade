@@ -181,10 +181,18 @@ public class PlayStationFormController {
         }
 
         String playstationNumber = txtPlayStationNumber.getText();
-        boolean isCusContactNumValidated = Pattern.matches("[1-9]", playstationNumber);
+        boolean isCusContactNumValidated = Pattern.matches("[1-9][1-3]", playstationNumber);
 
         if (!isCusContactNumValidated) {
             new Alert(Alert.AlertType.ERROR, "Invalid Playstation Number!!").show();
+            return false;
+        }
+
+        String rate= txtRate.getText();
+        boolean isRateValidated = Pattern.matches("[1-9][0-9]*.?[0-9]*", rate);
+
+        if (!isRateValidated) {
+            new Alert(Alert.AlertType.ERROR, "Invalid rate!!").show();
             return false;
         }
 

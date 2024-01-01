@@ -247,7 +247,7 @@ public class CustomerFormController {
         }
 
         String CusAddressText = txtCusAddress.getText();
-        boolean isCustomerAddressValidated = Pattern.matches("[A-Za-z](.*)", CusAddressText);
+        boolean isCustomerAddressValidated = Pattern.matches( "^[a-zA-Z0-9\\s.,#-]+$", CusAddressText);
 
         if (!isCustomerAddressValidated) {
             new Alert(Alert.AlertType.ERROR, "Invalid Customer Address!!").show();

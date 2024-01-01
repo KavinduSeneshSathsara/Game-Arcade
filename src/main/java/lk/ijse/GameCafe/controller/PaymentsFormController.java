@@ -137,7 +137,7 @@ public class PaymentsFormController implements Initializable {
                     txtBookingId.getText( ),
                     Date.valueOf( LocalDate.now( ) ),
                     Time.valueOf( LocalTime.now( ) ),
-                    Double.parseDouble( lblAmount.getText( ) )
+                    Double.parseDouble(lblAmount.getText( ) )
             ) );
 
             if ( savePayment ) {
