@@ -38,12 +38,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Properties;
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-import static lk.ijse.GameCafe.controller.ForgotPasswordFormController.otp;
 
 public class PaymentsFormController implements Initializable {
 
@@ -81,7 +76,7 @@ public class PaymentsFormController implements Initializable {
     private TableColumn<?, ?> colAmount;
 
     @FXML
-    private ComboBox<?> cmbBookingId;
+    private ComboBox<String> cmbBookingId;
 
     @FXML
     private TextField txtAmount;
@@ -271,6 +266,20 @@ public class PaymentsFormController implements Initializable {
        loadAllPayments();
        time();
        setPaymentId();
+       loadAllBookingId();
+    }
+
+    private void loadAllBookingId() {
+        ObservableList<String> obList = FXCollections.observableArrayList();
+        try {
+            List<BookingDto> dtos = bookingModel.getAllBooking();
+            for (BookingDto dto : dtos) {
+                obList.add(dto.getBookingId());
+            }
+            cmbBookingId.setItems(obList);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void btnSearchOnAction(ActionEvent actionEvent) {

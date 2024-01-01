@@ -130,4 +130,30 @@ public class BookingModel {
         }
         return null;
     }
+
+    public List<BookingDto> getAllBooking() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM booking";
+
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ResultSet resultSet = ps.executeQuery();
+
+        List<BookingDto> list = new ArrayList<>();
+
+        while (resultSet.next()) {
+            BookingDto dto = new BookingDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getDate(3),
+                    resultSet.getTime(4),
+                    resultSet.getTime(5),
+                    resultSet.getTime(6),
+                    resultSet.getString(7),
+                    resultSet.getDouble(8));
+                    list.add(dto);
+
+        }
+        return list;
+    }
+
 }
