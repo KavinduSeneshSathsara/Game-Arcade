@@ -18,6 +18,8 @@ import lk.ijse.GameCafe.db.DbConnection;
 import lk.ijse.GameCafe.dto.BookingDto;
 import lk.ijse.GameCafe.dto.CustomerDto;
 import lk.ijse.GameCafe.dto.PaymentDto;
+import lk.ijse.GameCafe.dto.tm.CustomerTm;
+import lk.ijse.GameCafe.dto.tm.EmployeeTm;
 import lk.ijse.GameCafe.dto.tm.PaymentTm;
 import lk.ijse.GameCafe.model.BookingModel;
 import lk.ijse.GameCafe.model.CustomerModel;
@@ -127,7 +129,7 @@ public class PaymentsFormController implements Initializable {
 
             boolean savePayment = paymentModel.savePayment( new PaymentDto(
                     lblPaymentID.getText( ),
-                    cmbBookingId.getId(),
+                    cmbBookingId.getValue(),
                     Date.valueOf( LocalDate.now( ) ),
                     Time.valueOf( LocalTime.now( ) ),
                     Double.parseDouble(lblAmount.getText( ) )
@@ -267,7 +269,9 @@ public class PaymentsFormController implements Initializable {
        time();
        setPaymentId();
        loadAllBookingId();
+
     }
+
 
     private void loadAllBookingId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
@@ -283,5 +287,30 @@ public class PaymentsFormController implements Initializable {
     }
 
     public void btnSearchOnAction(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    void btnDeleteOnAction(ActionEvent actionEvent) {
+        PaymentTm selectedPayment = tblPayment.getSelectionModel().getSelectedItem();
+
+        if (selectedPayment != null) {
+            String id = selectedPayment.getPaymentId();
+
+            try {
+                boolean isDeleted = paymentModel.deletePayment(id);
+
+                if (isDeleted) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Payment Deleted Successfully").show();
+                    loadAllPayments();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Failed to delete payment").show();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Add this line to print the stack trace
+                new Alert(Alert.AlertType.ERROR, "Error deleting payment: " + e.getMessage()).show();
+            }
+        } else {
+            new Alert(Alert.AlertType.INFORMATION, "Please select a Payment to delete.").show();
+        }
     }
 }

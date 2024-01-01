@@ -112,4 +112,22 @@ public class PaymentModel {
         }
         return dto;
     }
+
+    public boolean deletePayment(String id) throws SQLException {
+
+        try {
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            String sql = "DELETE FROM payment WHERE payment_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setString(1, id);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Add this line to print SQL errors
+            throw e;
+        }
+    }
 }
