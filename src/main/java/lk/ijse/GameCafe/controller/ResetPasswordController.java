@@ -47,6 +47,5 @@ public class ResetPasswordController {
     }
     public void initialize(){
         System.out.println(ForgotPasswordFormController.username);
-
     }
 }
