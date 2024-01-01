@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -30,7 +29,6 @@
             <TableColumn fx:id="colAction" prefWidth="157.0" text="Action" />
          </columns>
       </TableView>
-      <TextField fx:id="txtContact" layoutX="69.0" layoutY="143.0" onAction="#txtContactOnFocusLost" opacity="0.97" prefHeight="30.0" prefWidth="172.0" promptText="Customer Contact" style="-fx-background-radius: 20;" />
       <JFXButton fx:id="btnAddToList" buttonType="RAISED" layoutX="743.0" layoutY="199.0" onAction="#btnAddToListOnAction" prefHeight="40.0" prefWidth="151.0" style="-fx-background-color: #30336b; -fx-background-radius: 50;" text="Add To List" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -96,5 +94,6 @@
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
+      <ComboBox fx:id="cmbCusNumbers" layoutX="69.0" layoutY="139.0" onAction="#cmbCusNumbersOnAction" prefHeight="31.0" prefWidth="195.0" promptText="Customer Contact numbers" />
     </children>
 </Pane>

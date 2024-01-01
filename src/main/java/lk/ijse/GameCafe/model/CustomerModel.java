@@ -83,9 +83,7 @@ public class CustomerModel {
             list.add(dto);
 
         }
-
         return list;
-
     }
 
     public boolean deleteEmployee(String id) throws SQLException {

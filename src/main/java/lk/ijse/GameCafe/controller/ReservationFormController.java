@@ -19,15 +19,12 @@ import javafx.util.Duration;
 import lk.ijse.GameCafe.db.DbConnection;
 import lk.ijse.GameCafe.dto.*;
 import lk.ijse.GameCafe.dto.tm.CartTm;
-import lk.ijse.GameCafe.dto.tm.PaymentTm;
 import lk.ijse.GameCafe.model.*;
 
 import java.net.URL;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +55,7 @@ public class ReservationFormController implements Initializable{
     private TableColumn<?, ?> colAction;
 
     @FXML
-    private TextField txtContact;
+    private ComboBox<String> cmbCusNumbers;
 
     @FXML
     private TextField txtCustMail;
@@ -267,7 +264,7 @@ public class ReservationFormController implements Initializable{
 
         try {
 
-            CustomerDto customerDto = customerModel.getCustomer(txtContact.getText());
+            CustomerDto customerDto = customerModel.getCustomer(String.valueOf(cmbCusNumbers.getValue()));
 
             connection = DbConnection.getInstance( ).getConnection( );
             connection.setAutoCommit( false );
@@ -349,9 +346,9 @@ public class ReservationFormController implements Initializable{
 //    }
 
     @FXML
-    void txtContactOnFocusLost(Event event) {
+    void cmbCusNumbersOnAction(Event event) {
         try {
-            CustomerDto customerDto = customerModel.getCustomer(txtContact.getText());
+            CustomerDto customerDto = customerModel.getCustomer(String.valueOf(cmbCusNumbers.getValue()));
             lblCustomerName.setText(customerDto.getCusName());
             lblCustomerEmail.setText(customerDto.getCusEmail());
         } catch (SQLException e) {
@@ -414,7 +411,21 @@ public class ReservationFormController implements Initializable{
         lblRate.setText("");
         loadOrderId();
         loadAllStations();
+        loadAllNumbers();
 
         tblCart.setItems(cart);
+    }
+
+    private void loadAllNumbers() {
+        ObservableList<String> obList = FXCollections.observableArrayList();
+        try {
+            List<CustomerDto> dtos = customerModel.getAllCustomers();
+            for (CustomerDto dto : dtos) {
+                obList.add(dto.getCusContactNum());
+            }
+            cmbCusNumbers.setItems(obList);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
