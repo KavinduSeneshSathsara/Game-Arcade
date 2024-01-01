@@ -103,18 +103,13 @@ public class PaymentsFormController implements Initializable {
     CustomerModel customerModel = new CustomerModel();
     CustomerDto customerDto = new CustomerDto();
 
+
+
     @FXML
     void btnClearOnAction(ActionEvent event) {
         txtBookingId.clear();
         lblCustomerName.setText("");
         lblAmount.setText("");
-    }
-
-    public void initialize(){
-        setCellValueFactory();
-        loadAllPayments();
-        time();
-        setPaymentId();
     }
 
     private void setCellValueFactory() {
@@ -165,7 +160,7 @@ public class PaymentsFormController implements Initializable {
     }
 
     private void loadAllPayments() {
-
+        System.out.println("load");
         PaymentModel paymentModel = new PaymentModel();
 
         ObservableList<PaymentTm> obList = FXCollections.observableArrayList();
@@ -269,6 +264,10 @@ public class PaymentsFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
        setPaymentId();
        time();
+       setCellValueFactory();
+       loadAllPayments();
+       time();
+       setPaymentId();
     }
 
     public void btnSearchOnAction(ActionEvent actionEvent) {
