@@ -146,8 +146,9 @@ public class PlayStationFormController {
     }
 
     @FXML
-    void btnClearOnAction(ActionEvent event) {
+    void btnClearOnAction(ActionEvent event) throws SQLException {
         clearFields();
+        generatePlayStationId();
     }
 
     private void clearFields() {

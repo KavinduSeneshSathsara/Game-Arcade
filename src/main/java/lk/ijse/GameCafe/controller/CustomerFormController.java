@@ -92,7 +92,7 @@ public class CustomerFormController {
     @FXML
     void btnClearOnAction(ActionEvent event) {
         clearFields();
-
+        generateCustomerId();
     }
     private void clearFields() {
 
