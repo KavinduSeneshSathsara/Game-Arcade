@@ -174,6 +174,8 @@ public class PlayStationFormController {
             boolean isSaved = playStationModel.savePlayStation(new PlayStationDto(playStation, playStationNum, status,rate));
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"Saved Successfully").show();
+                clearFields();
+                generatePlayStationId();
                 loadAllPlayStations();
             }
         } catch (SQLException e) {
@@ -192,7 +194,7 @@ public class PlayStationFormController {
         }
 
         String playstationNumber = txtPlayStationNumber.getText();
-        boolean isCusContactNumValidated = Pattern.matches("[1-9][1-3]", playstationNumber);
+        boolean isCusContactNumValidated = Pattern.matches("[1-9]", playstationNumber);
 
         if (!isCusContactNumValidated) {
             new Alert(Alert.AlertType.ERROR, "Invalid Playstation Number!!").show();
