@@ -103,6 +103,7 @@ public class EmployeeModel {
     public String generateNewEmpId() throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
         String sql = "SELECT CONCAT('E', LPAD(IFNULL(MAX(SUBSTRING(emp_id, 2)), 0) + 1, 4, '0')) FROM employee";
+//        String sql = "SELECT * from employee ORDER BY emp_id desc LIMIT 1";
 
         try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet resultSet = ps.executeQuery()) {

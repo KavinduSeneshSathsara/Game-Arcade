@@ -20,13 +20,10 @@ import java.util.Random;
 public class ForgotPasswordFormController {
 
     @FXML
-    private AnchorPane ForgotPane;
+    private AnchorPane root;
 
     @FXML
     private Button btnBack;
-
-    @FXML
-    private AnchorPane root;
 
     @FXML
     private Button btnReset;
