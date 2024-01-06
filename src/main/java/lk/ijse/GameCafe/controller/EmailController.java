@@ -1,11 +1,13 @@
 package lk.ijse.GameCafe.controller;
 
-import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
 
 public class EmailController {
+
     public static void sendEmail(String recipient, String subject, String body) throws MessagingException {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -17,7 +19,7 @@ public class EmailController {
         String username = "cafeaulait460@gmail.com";
         String password = "pxfnelcsiqbyblfi";
 
-        javax.mail.Session session = Session.getInstance(props, new Authenticator() {
+        Session session = Session.getInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }

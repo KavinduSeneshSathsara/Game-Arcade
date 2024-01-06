@@ -45,19 +45,17 @@ public class ForgotPasswordFormController {
     }
 
     @FXML
-    void btnResetOnAction(ActionEvent event) throws SQLException, MessagingException, IOException {
+    void btnResetOnAction(ActionEvent event) throws MessagingException, SQLException, IOException {
         username = txtUsername.getText();
-
         UserModel userModel = new UserModel();
-        Random random = new Random();
 
+        Random random = new Random();
         otp = random.nextInt(9000);
         otp += 1000;
 
         UserDto userDto = userModel.getEmail(username);
         System.out.println(userDto.getEmail());
-
-        EmailController.sendEmail(userDto.getEmail(), "Verification Code for Password Reset", otp + "");
+        EmailController.sendEmail(userDto.getEmail(), "verification", otp + "");
 
         btnReset.getScene().getWindow().hide();
         Navigation.switchNavigation("otp_form.fxml",event);
